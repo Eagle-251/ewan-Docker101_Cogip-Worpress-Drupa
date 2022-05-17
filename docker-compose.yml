@@ -1,0 +1,71 @@
+version: '3.0'
+
+services:
+  #Monolith Services
+  db:
+    image: mariadb
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    env_file: $PWD/env/.env.mariadb
+    networks:
+      - backend
+    volumes:
+      - $PWD/init-db:/docker-entrypoint-initdb.d
+      - $PWD/cogip-src/database/cogip.sql:/congip-init/cogip.sql:ro
+      - $PWD/db:/var/lib/mysql
+
+  nginx:
+    image: nginx:1.16.0-alpine
+    depends_on:
+      - db
+    volumes:
+      - $PWD/nginx:/etc/nginx
+      - $PWD/web:/var/www/html
+    ports:
+      - '80:80'
+    networks:
+      - frontend
+ 
+  #Individual Apps
+
+  wordpress:
+    image: wordpress:php8.1-fpm-alpine
+    depends_on:
+      - db
+    restart: always
+    env_file: $PWD/env/.env.wordpress
+    volumes:
+      - $PWD/web/wordpress:/var/www/html/wordpress
+    networks:
+      - frontend
+      - backend
+
+  drupal:
+    image: drupal:8-fpm
+    depends_on:
+      - db
+    env_file: $PWD/env/.env.drupal
+    volumes:
+      - $PWD/web/drupal/modules:/var/www/html/drupal
+    networks:
+      - frontend
+      - backend
+    restart: always
+
+  cogip_php:
+#    image: php:7.4-fpm
+    image: php:7.4-fpm-mysql
+    build:
+      dockerfile: Dockerfile.php
+    depends_on:
+      - db
+    volumes:
+      - $PWD/web/cogip-src:/var/www/html/cogip
+    networks:
+      - frontend
+      - backend
+
+networks:
+  frontend:
+  backend:
+
