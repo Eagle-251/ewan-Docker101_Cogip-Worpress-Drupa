@@ -78,3 +78,39 @@ ALTER TABLE `invoice`
 INSERT INTO `user` (`username`, `password`, `mode`) VALUES('admin', 'admin123', 'winner');
 
 EOF
+
+
+
+
+#USERS/DATABASES=(cogip wordpress drupal)
+
+#PASSWORDS=(
+#rahng9duWuuw6phi8eewooshi5aichiewiedaXahShuuY4Od8ahp8wiva3quu9ai
+#muegiezei7ithoo4Va8IepeiS3nooj7dooP7neepeghoophae8QuooChooG4rie2
+#ooqu5quah3lainahphozaeKahshien5aip7seeHeiFah4zoothi9Oozeen7jahWi
+#)
+
+#for i in "${USERS[@]}" do
+#  for p in "${PASSWORDS[@]}" do
+#     mysql < CREATE USER $i@localhost IDENTIFIED by $p;
+#     mysql < GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on $i to $i@'localhost;
+#  done
+#done
+
+
+mysql -uroot -plocal <<"EOF"
+
+CREATE USER 'cogip'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON cogip.* TO 'cogip'@'localhost' WITH GRANT OPTION;
+EOF
+
+mysql -uroot -plocal <<"EOF"
+CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' WITH GRANT OPTION;
+EOF
+
+mysql -uroot -plocal <<"EOF"
+CREATE USER 'drupal'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'localhost' WITH GRANT OPTION;
+EOF
+
