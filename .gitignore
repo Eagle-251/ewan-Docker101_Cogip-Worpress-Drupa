@@ -1,1 +1,8 @@
-db
+db/*
+wordpress/*
+env/*
+drupal/*
+cogip-src/*
+init-db/*
+certbot/*
+nginx-ssl/*

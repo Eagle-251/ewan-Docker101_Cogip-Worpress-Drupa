@@ -99,18 +99,12 @@ EOF
 
 
 mysql -uroot -plocal <<"EOF"
-
-CREATE USER 'cogip'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON cogip.* TO 'cogip'@'localhost' WITH GRANT OPTION;
-EOF
-
-mysql -uroot -plocal <<"EOF"
-CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost' WITH GRANT OPTION;
-EOF
-
-mysql -uroot -plocal <<"EOF"
-CREATE USER 'drupal'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'localhost' WITH GRANT OPTION;
+CREATE USER 'cogip'@'full-stack-cogip_php-1.full-stack_backend' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON cogip.* TO 'cogip'@'full-stack-cogip_php-1.full-stack_backend';
+CREATE USER 'wordpress'@'full-stack-wordpress-1.full-stack_backend' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'full-stack-wordpress-1.full-stack_backend';
+CREATE USER 'drupal'@'full-stack-drupal-1.full-stack_backend' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'full-stack-drupal-1.full-stack_backend';
+FLUSH PRIVILEGES;
 EOF
 
