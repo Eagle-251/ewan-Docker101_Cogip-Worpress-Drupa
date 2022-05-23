@@ -1,6 +1,6 @@
 /db/*
 /wordpress/*
-/env
+**/*.env.*
 /drupal/*
 /cogip-src/*
 /init-db/*
