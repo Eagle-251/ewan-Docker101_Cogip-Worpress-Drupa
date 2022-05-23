@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile.mariadb
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: always
-    env_file: $PWD/env/.env.mariadb
+    env_file: $PWD/.env/.env.mariadb
     #environment:
       #MARIADB_ROOT_PASSWORD: /run/secrets/db_root
     networks:
@@ -44,7 +44,7 @@ services:
     depends_on:
       - db
     restart: always
-    env_file: $PWD/env/.env.wordpress
+    env_file: $PWD/.env/.env.wordpress
     environment:
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_HOME','http://vmsdt-gilchrist.becode.org/wordpress');
@@ -62,7 +62,7 @@ services:
       dockerfile: Dockerfile.drupal
     depends_on:
       - db
-    env_file: $PWD/env/.env.drupal
+    env_file: $PWD/.env/.env.drupal
     working_dir: /var/www/html/drupal
     volumes:
       - $PWD/drupal/modules:/var/www/html/drupal/modules
@@ -79,7 +79,7 @@ services:
     image: php:7.4-fpm-mysql
     build:
       dockerfile: ./Dockerfile.php
-    env_file: $PWD/env/.env.cogip
+    env_file: $PWD/.env/.env.cogip
     depends_on:
       - db
     volumes:
