@@ -9,11 +9,12 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: always
     env_file: $PWD/env/.env.mariadb
+    #environment:
+      #MARIADB_ROOT_PASSWORD: /run/secrets/db_root
     networks:
       - backend
     volumes:
       - $PWD/init-db:/docker-entrypoint-initdb.d
-      #- $PWD/cogip-src/database/cogip.sql:/congip-init/cogip.sql:ro
       - $PWD/db:/var/lib/mysql
 
   nginx:
@@ -40,7 +41,6 @@ services:
     image: wordpress-sendmail
     build:
       dockerfile: Dockerfile.wordpress
-    # image: wordpress:php8.1-fpm-alpine
     depends_on:
       - db
     restart: always
@@ -79,6 +79,7 @@ services:
     image: php:7.4-fpm-mysql
     build:
       dockerfile: ./Dockerfile.php
+    env_file: $PWD/env/.env.cogip
     depends_on:
       - db
     volumes:
@@ -90,3 +91,14 @@ services:
 networks:
   frontend:
   backend:
+#secrets:
+  #cogip_admin:
+    #external: true
+  #db_cogip:
+    #external: true
+  #db_drupal:
+    #external: true
+  #db_root:
+    #external: true
+  #db_wordpress:
+    #external: true

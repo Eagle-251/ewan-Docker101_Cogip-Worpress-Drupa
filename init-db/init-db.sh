@@ -2,9 +2,9 @@
 #/usr/bin/mysqld_safe --skip-grant-tables &
 #sleep 5
 
-mysql -uroot -plocal -e "CREATE DATABASE wordpress;CREATE DATABASE drupal;CREATE DATABASE cogip;"
+mysql -uroot -p"$MARIADB_ROOT_PASSWORD" -e "CREATE DATABASE wordpress;CREATE DATABASE drupal;CREATE DATABASE cogip;"
 
-mysql -uroot -p cogip -plocal << "EOF"
+mysql -uroot -p cogip -p"$MARIADB_ROOT_PASSWORD" << "EOF"
 CREATE TABLE `company` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -98,12 +98,12 @@ EOF
 #done
 
 
-mysql -uroot -plocal <<"EOF"
-CREATE USER 'cogip'@'full-stack-cogip_php-1.full-stack_backend' IDENTIFIED BY 'password';
+mysql -uroot -p"$MARIADB_ROOT_PASSWORD" <<EOF
+CREATE USER 'cogip'@'full-stack-cogip_php-1.full-stack_backend' IDENTIFIED BY '$COGIP_DB_PASSWORD';
 GRANT ALL PRIVILEGES ON cogip.* TO 'cogip'@'full-stack-cogip_php-1.full-stack_backend';
-CREATE USER 'wordpress'@'full-stack-wordpress-1.full-stack_backend' IDENTIFIED BY 'password';
+CREATE USER 'wordpress'@'full-stack-wordpress-1.full-stack_backend' IDENTIFIED BY '$WORDPRESS_DB_PASSWORD';
 GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'full-stack-wordpress-1.full-stack_backend';
-CREATE USER 'drupal'@'full-stack-drupal-1.full-stack_backend' IDENTIFIED BY 'password';
+CREATE USER 'drupal'@'full-stack-drupal-1.full-stack_backend' IDENTIFIED BY '$DRUPAL_PASSWORD';
 GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'full-stack-drupal-1.full-stack_backend';
 FLUSH PRIVILEGES;
 EOF
