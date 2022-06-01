@@ -4,5 +4,5 @@
 /drupal/*
 /cogip-src/*
 /init-db/*
-/certbot/*
+certbot
 /nginx-ssl/*
